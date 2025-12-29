@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
+"""
+Palo Alto Networks EDL Collector
+Collects threat intelligence from multiple open sources
+"""
 import requests
 import re
 import json
 from datetime import datetime
 from pathlib import Path
-import socket
 import ipaddress
+import sys
 
 class PANEDLCollector:
     """Palo Alto Networks EDL Collector for PA-440"""
@@ -329,21 +333,33 @@ def main():
     print("  Palo Alto Networks EDL Collector for PA-440")
     print("=" * 60)
     
-    collector = PANEDLCollector()
-    
-    # 抓取所有來源
-    collector.fetch_all_sources()
-    
-    # 保存 EDL 清單
-    print("\n💾 正在保存 EDL 清單...")
-    collector.save_pan_edl_lists()
-    
-    print("\n✅ 完成！")
-    print("\n📝 下一步:")
-    print("   1. 提交變更到 GitHub")
-    print("   2. 確認 GitHub Pages 已啟用")
-    print("   3. 在 PA-440 中設定 EDL URL")
-    print("=" * 60)
+    try:
+        collector = PANEDLCollector()
+        
+        # 抓取所有來源
+        collector.fetch_all_sources()
+        
+        # 保存 EDL 清單
+        print("\n💾 正在保存 EDL 清單...")
+        collector.save_pan_edl_lists()
+        
+        print("\n✅ 完成！")
+        print("\n📝 下一步:")
+        print("   1. 提交變更到 GitHub")
+        print("   2. 確認 GitHub Pages 已啟用")
+        print("   3. 在 PA-440 中設定 EDL URL")
+        print("=" * 60)
+        
+        # 檢查是否有過多錯誤
+        if len(collector.stats['errors']) > 5:
+            print(f"\n⚠️  警告: 有 {len(collector.stats['errors'])} 個來源失敗")
+            sys.exit(1)
+            
+    except Exception as e:
+        print(f"\n❌ 執行失敗: {e}")
+        import traceback
+        traceback.print_exc()
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
