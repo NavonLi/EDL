@@ -71,8 +71,18 @@
 啟用 GitHub Pages 後，可透過以下 URL 存取：
 
 ```
+# 完整清單 (IPv4 + IPv6)
 https://<your-username>.github.io/<repo-name>/malicious_ips.txt
 https://<your-username>.github.io/<repo-name>/malicious_domains.txt
+
+# IPv4 專用清單
+https://<your-username>.github.io/<repo-name>/malicious_ips_v4.txt
+
+# IPv6 專用清單
+https://<your-username>.github.io/<repo-name>/malicious_ips_v6.txt
+
+# 統計頁面
+https://<your-username>.github.io/<repo-name>/
 ```
 
 ## 🔧 防火牆設定範例
@@ -134,10 +144,20 @@ def fetch_custom_source(self):
 
 ## ⚠️ 注意事項
 
-1. **誤報處理**：某些來源可能包含誤報，建議搭配白名單使用
-2. **Tor 節點**：Tor 出口節點本身不一定是惡意的，視使用情境決定是否封鎖
-3. **更新延遲**：GitHub Actions 可能有數分鐘延遲
-4. **流量限制**：某些威脅情報來源有存取頻率限制
+1. **IPv4 vs IPv6**：
+   - 如果你的防火牆只需要 IPv4，使用 `malicious_ips_v4.txt`
+   - 如果需要 IPv6 支援，使用 `malicious_ips_v6.txt`
+   - 完整清單 `malicious_ips.txt` 包含兩者（PA-440 支援）
+   
+2. **誤報處理**：某些來源可能包含誤報，建議搭配白名單使用
+
+3. **Tor 節點**：Tor 出口節點本身不一定是惡意的，視使用情境決定是否封鎖
+
+4. **更新延遲**：GitHub Actions 可能有數分鐘延遲
+
+5. **流量限制**：某些威脅情報來源有存取頻率限制
+
+6. **連線逾時**：部分來源可能暫時無法連線（如 MalwareDomainList），不影響其他來源
 
 ## 📝 授權
 
