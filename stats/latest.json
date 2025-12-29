@@ -1,0 +1,102 @@
+{
+  "timestamp": "2025-12-29T03:08:08.853320",
+  "sources": {
+    "blocklist.de": {
+      "ipv4": 22081,
+      "ipv6": 263,
+      "cidr_v4": 0,
+      "cidr_v6": 0,
+      "total": 22344
+    },
+    "OpenDBL_TOR_exit_nodes": {
+      "ipv4": 1274,
+      "ipv6": 0,
+      "cidr_v4": 0,
+      "cidr_v6": 0,
+      "total": 1274
+    },
+    "OpenDBL_BruteforceBlocker": {
+      "ipv4": 475,
+      "ipv6": 0,
+      "cidr_v4": 0,
+      "cidr_v6": 0,
+      "total": 475
+    },
+    "OpenDBL_Block_Dshield": {
+      "ipv4": 0,
+      "ipv6": 0,
+      "cidr_v4": 0,
+      "cidr_v6": 0,
+      "total": 0
+    },
+    "OpenDBL_SSL_Abuse_IP_list": {
+      "ipv4": 0,
+      "ipv6": 0,
+      "cidr_v4": 0,
+      "cidr_v6": 0,
+      "total": 0
+    },
+    "OpenDBL_Talos": {
+      "ipv4": 0,
+      "ipv6": 0,
+      "cidr_v4": 0,
+      "cidr_v6": 0,
+      "total": 0
+    },
+    "OpenDBL_IPSum_Level_3": {
+      "ipv4": 19769,
+      "ipv6": 0,
+      "cidr_v4": 0,
+      "cidr_v6": 0,
+      "total": 19769
+    },
+    "greensnow": {
+      "ipv4": 6116,
+      "ipv6": 0,
+      "cidr_v4": 0,
+      "cidr_v6": 0,
+      "total": 6116
+    },
+    "FireHOL": {
+      "ipv4": 1,
+      "ipv6": 0,
+      "cidr_v4": 4486,
+      "cidr_v6": 0,
+      "total": 4487
+    },
+    "spamhaus": {
+      "ipv4": 0,
+      "ipv6": 0,
+      "cidr_v4": 1475,
+      "cidr_v6": 0,
+      "total": 1475
+    },
+    "feodotracker": {
+      "ipv4": 3,
+      "ipv6": 0,
+      "cidr_v4": 0,
+      "cidr_v6": 0,
+      "total": 3
+    },
+    "emergingthreats": {
+      "ipv4": 4,
+      "ipv6": 0,
+      "cidr_v4": 1492,
+      "cidr_v6": 0,
+      "total": 1496
+    },
+    "URLhaus": 35428,
+    "Phishing_Army": 160870
+  },
+  "total_ips": 0,
+  "total_cidrs": 0,
+  "total_domains": 196286,
+  "errors": [
+    "MalwareDomainList: HTTPSConnectionPool(host='www.malwaredomainlist.com', port=443): Max retries exceeded with url: /hostslist/hosts.txt (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.malwaredomainlist.com', port=443) at 0x7f74d8ac8c90>, 'Connection to www.malwaredomainlist.com timed out. (connect timeout=30)'))"
+  ],
+  "total_ipv4": 36707,
+  "total_ipv6": 263,
+  "total_cidr_v4": 4607,
+  "total_cidr_v6": 0,
+  "combined_total": 237863
+}
