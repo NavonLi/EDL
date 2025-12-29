@@ -15,8 +15,10 @@ class PANEDLCollector:
     """Palo Alto Networks EDL Collector for PA-440"""
     
     def __init__(self):
-        self.malicious_ips = set()
-        self.malicious_cidrs = set()
+        self.malicious_ips_v4 = set()
+        self.malicious_ips_v6 = set()
+        self.malicious_cidrs_v4 = set()
+        self.malicious_cidrs_v6 = set()
         self.malicious_domains = set()
         self.stats = {
             'timestamp': datetime.utcnow().isoformat(),
@@ -83,8 +85,10 @@ class PANEDLCollector:
             })
             response.raise_for_status()
             
-            ips = set()
-            cidrs = set()
+            ips_v4 = set()
+            ips_v6 = set()
+            cidrs_v4 = set()
+            cidrs_v6 = set()
             
             for line in response.text.split('\n'):
                 line = line.strip()
@@ -99,20 +103,34 @@ class PANEDLCollector:
                 # 檢查是否為 CIDR
                 if '/' in line:
                     if self.is_valid_cidr(line):
-                        cidrs.add(line)
+                        ip_obj = ipaddress.ip_network(line, strict=False)
+                        if ip_obj.version == 4:
+                            cidrs_v4.add(line)
+                        else:
+                            cidrs_v6.add(line)
                 # 檢查是否為單個 IP
                 elif self.is_valid_ip(line):
-                    ips.add(line)
+                    ip_obj = ipaddress.ip_address(line)
+                    if ip_obj.version == 4:
+                        ips_v4.add(line)
+                    else:
+                        ips_v6.add(line)
             
-            self.malicious_ips.update(ips)
-            self.malicious_cidrs.update(cidrs)
+            self.malicious_ips_v4.update(ips_v4)
+            self.malicious_ips_v6.update(ips_v6)
+            self.malicious_cidrs_v4.update(cidrs_v4)
+            self.malicious_cidrs_v6.update(cidrs_v6)
+            
+            total = len(ips_v4) + len(ips_v6) + len(cidrs_v4) + len(cidrs_v6)
             self.stats['sources'][name] = {
-                'ips': len(ips),
-                'cidrs': len(cidrs),
-                'total': len(ips) + len(cidrs)
+                'ipv4': len(ips_v4),
+                'ipv6': len(ips_v6),
+                'cidr_v4': len(cidrs_v4),
+                'cidr_v6': len(cidrs_v6),
+                'total': total
             }
             
-            print(f"✓ ({len(ips)} IPs, {len(cidrs)} CIDRs)")
+            print(f"✓ ({len(ips_v4)} IPv4, {len(ips_v6)} IPv6, {len(cidrs_v4)+len(cidrs_v6)} CIDRs)")
             return True
             
         except Exception as e:
@@ -193,21 +211,59 @@ class PANEDLCollector:
         
         timestamp = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')
         
-        # 保存 IP 清單（包含單個 IP 和 CIDR）
-        with open("edl/malicious_ips.txt", "w") as f:
-            f.write(f"# Palo Alto Networks EDL - Malicious IPs\n")
+        # 保存 IPv4 清單
+        with open("edl/malicious_ips_v4.txt", "w") as f:
+            f.write(f"# Palo Alto Networks EDL - Malicious IPv4\n")
             f.write(f"# Updated: {timestamp}\n")
-            f.write(f"# Total IPs: {len(self.malicious_ips)}\n")
-            f.write(f"# Total CIDRs: {len(self.malicious_cidrs)}\n")
+            f.write(f"# Total IPs: {len(self.malicious_ips_v4)}\n")
+            f.write(f"# Total CIDRs: {len(self.malicious_cidrs_v4)}\n")
             f.write(f"# Compatible with: PA-440, PA-Series\n")
             f.write("#\n")
             
-            # 先寫入 CIDR（通常優先級較高）
-            for cidr in sorted(self.malicious_cidrs):
+            # 先寫入 CIDR
+            for cidr in sorted(self.malicious_cidrs_v4):
                 f.write(f"{cidr}\n")
             
             # 再寫入單個 IP
-            for ip in sorted(self.malicious_ips, key=lambda x: ipaddress.ip_address(x)):
+            for ip in sorted(self.malicious_ips_v4, key=lambda x: ipaddress.ip_address(x)):
+                f.write(f"{ip}\n")
+        
+        # 保存 IPv6 清單
+        with open("edl/malicious_ips_v6.txt", "w") as f:
+            f.write(f"# Palo Alto Networks EDL - Malicious IPv6\n")
+            f.write(f"# Updated: {timestamp}\n")
+            f.write(f"# Total IPs: {len(self.malicious_ips_v6)}\n")
+            f.write(f"# Total CIDRs: {len(self.malicious_cidrs_v6)}\n")
+            f.write(f"# Compatible with: PA-440, PA-Series\n")
+            f.write("#\n")
+            
+            # 先寫入 CIDR
+            for cidr in sorted(self.malicious_cidrs_v6):
+                f.write(f"{cidr}\n")
+            
+            # 再寫入單個 IP
+            for ip in sorted(self.malicious_ips_v6, key=lambda x: ipaddress.ip_address(x)):
+                f.write(f"{ip}\n")
+        
+        # 保存合併的 IP 清單（IPv4 + IPv6）
+        with open("edl/malicious_ips.txt", "w") as f:
+            f.write(f"# Palo Alto Networks EDL - All Malicious IPs (IPv4 + IPv6)\n")
+            f.write(f"# Updated: {timestamp}\n")
+            f.write(f"# Total IPv4: {len(self.malicious_ips_v4)} IPs + {len(self.malicious_cidrs_v4)} CIDRs\n")
+            f.write(f"# Total IPv6: {len(self.malicious_ips_v6)} IPs + {len(self.malicious_cidrs_v6)} CIDRs\n")
+            f.write(f"# Compatible with: PA-440, PA-Series\n")
+            f.write("#\n")
+            f.write("# IPv4 CIDRs\n")
+            for cidr in sorted(self.malicious_cidrs_v4):
+                f.write(f"{cidr}\n")
+            f.write("# IPv4 Addresses\n")
+            for ip in sorted(self.malicious_ips_v4, key=lambda x: ipaddress.ip_address(x)):
+                f.write(f"{ip}\n")
+            f.write("# IPv6 CIDRs\n")
+            for cidr in sorted(self.malicious_cidrs_v6):
+                f.write(f"{cidr}\n")
+            f.write("# IPv6 Addresses\n")
+            for ip in sorted(self.malicious_ips_v6, key=lambda x: ipaddress.ip_address(x)):
                 f.write(f"{ip}\n")
         
         # 保存 Domain 清單
@@ -220,14 +276,15 @@ class PANEDLCollector:
             for domain in sorted(self.malicious_domains):
                 f.write(f"{domain}\n")
         
-        # 建立分類清單（可選）
-        self.save_categorized_lists()
-        
         # 更新統計
-        self.stats['total_ips'] = len(self.malicious_ips)
-        self.stats['total_cidrs'] = len(self.malicious_cidrs)
+        self.stats['total_ipv4'] = len(self.malicious_ips_v4)
+        self.stats['total_ipv6'] = len(self.malicious_ips_v6)
+        self.stats['total_cidr_v4'] = len(self.malicious_cidrs_v4)
+        self.stats['total_cidr_v6'] = len(self.malicious_cidrs_v6)
         self.stats['total_domains'] = len(self.malicious_domains)
-        self.stats['combined_total'] = len(self.malicious_ips) + len(self.malicious_cidrs) + len(self.malicious_domains)
+        self.stats['combined_total'] = (len(self.malicious_ips_v4) + len(self.malicious_ips_v6) + 
+                                        len(self.malicious_cidrs_v4) + len(self.malicious_cidrs_v6) + 
+                                        len(self.malicious_domains))
         
         with open("stats/latest.json", "w") as f:
             json.dump(self.stats, f, indent=2)
@@ -236,8 +293,8 @@ class PANEDLCollector:
         self.create_stats_page()
         
         print(f"\n✅ EDL 清單已保存:")
-        print(f"   📄 IPs: {len(self.malicious_ips)} 個")
-        print(f"   📄 CIDRs: {len(self.malicious_cidrs)} 個")
+        print(f"   📄 IPv4: {len(self.malicious_ips_v4)} IPs + {len(self.malicious_cidrs_v4)} CIDRs")
+        print(f"   📄 IPv6: {len(self.malicious_ips_v6)} IPs + {len(self.malicious_cidrs_v6)} CIDRs")
         print(f"   📄 Domains: {len(self.malicious_domains)} 個")
         print(f"   📊 總計: {self.stats['combined_total']} 筆")
         
@@ -259,6 +316,9 @@ class PANEDLCollector:
     
     def create_stats_page(self):
         """建立統計資訊網頁"""
+        total_ips = len(self.malicious_ips_v4) + len(self.malicious_ips_v6)
+        total_cidrs = len(self.malicious_cidrs_v4) + len(self.malicious_cidrs_v6)
+        
         html = f"""<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -268,13 +328,16 @@ class PANEDLCollector:
     <style>
         body {{ font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }}
         h1 {{ color: #e85d25; }}
-        .stats {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }}
+        .stats {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }}
         .card {{ background: #f5f5f5; padding: 20px; border-radius: 8px; }}
         .number {{ font-size: 36px; font-weight: bold; color: #e85d25; }}
         table {{ width: 100%; border-collapse: collapse; margin-top: 20px; }}
         th, td {{ padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }}
         th {{ background: #e85d25; color: white; }}
         .updated {{ color: #666; font-size: 14px; }}
+        .download {{ margin-top: 20px; }}
+        .download a {{ display: inline-block; padding: 10px 20px; background: #e85d25; color: white; text-decoration: none; border-radius: 5px; margin: 5px; }}
+        .download a:hover {{ background: #c74d1f; }}
     </style>
 </head>
 <body>
@@ -283,12 +346,14 @@ class PANEDLCollector:
     
     <div class="stats">
         <div class="card">
-            <h3>惡意 IP</h3>
-            <div class="number">{len(self.malicious_ips):,}</div>
+            <h3>IPv4</h3>
+            <div class="number">{len(self.malicious_ips_v4):,}</div>
+            <small>{len(self.malicious_cidrs_v4):,} CIDRs</small>
         </div>
         <div class="card">
-            <h3>CIDR 區段</h3>
-            <div class="number">{len(self.malicious_cidrs):,}</div>
+            <h3>IPv6</h3>
+            <div class="number">{len(self.malicious_ips_v6):,}</div>
+            <small>{len(self.malicious_cidrs_v6):,} CIDRs</small>
         </div>
         <div class="card">
             <h3>惡意域名</h3>
@@ -300,6 +365,14 @@ class PANEDLCollector:
         </div>
     </div>
     
+    <div class="download">
+        <h2>📥 下載 EDL 清單</h2>
+        <a href="malicious_ips.txt">完整 IP 清單 (IPv4 + IPv6)</a>
+        <a href="malicious_ips_v4.txt">IPv4 專用清單</a>
+        <a href="malicious_ips_v6.txt">IPv6 專用清單</a>
+        <a href="malicious_domains.txt">域名清單</a>
+    </div>
+    
     <h2>📊 來源統計</h2>
     <table>
         <tr>
@@ -308,20 +381,14 @@ class PANEDLCollector:
         </tr>
 """
         
-        for source, count in sorted(self.stats['sources'].items(), key=lambda x: str(x[1]), reverse=True):
+        for source, count in sorted(self.stats['sources'].items(), key=lambda x: x[1].get('total', x[1]) if isinstance(x[1], dict) else x[1], reverse=True):
             if isinstance(count, dict):
-                count_str = f"{count['total']:,} ({count['ips']} IPs + {count['cidrs']} CIDRs)"
+                count_str = f"{count['total']:,} (IPv4: {count['ipv4']}, IPv6: {count['ipv6']}, CIDRs: {count['cidr_v4']+count['cidr_v6']})"
             else:
                 count_str = f"{count:,}"
             html += f"        <tr><td>{source}</td><td>{count_str}</td></tr>\n"
         
         html += """    </table>
-    
-    <h2>📥 EDL URL</h2>
-    <ul>
-        <li><a href="malicious_ips.txt">malicious_ips.txt</a> - IP 和 CIDR 清單</li>
-        <li><a href="malicious_domains.txt">malicious_domains.txt</a> - 域名清單</li>
-    </ul>
 </body>
 </html>"""
         
