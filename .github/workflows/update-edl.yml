@@ -13,6 +13,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
       
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -21,7 +23,7 @@ jobs:
         
     - name: Install dependencies
       run: |
-        pip install requests validators
+        pip install requests
         
     - name: Create necessary directories
       run: |
@@ -31,24 +33,71 @@ jobs:
       run: python scripts/update_edl.py
       continue-on-error: false
       
-    - name: Check for changes
-      id: check_changes
+    - name: List generated files
       run: |
-        git diff --quiet || echo "changed=true" >> $GITHUB_OUTPUT
+        echo "=== EDL 目錄內容 ==="
+        ls -lh edl/ || echo "EDL 目錄不存在"
+        echo ""
+        echo "=== Stats 目錄內容 ==="
+        ls -lh stats/ || echo "Stats 目錄不存在"
         
-    - name: Commit and push if changed
-      if: steps.check_changes.outputs.changed == 'true'
+    - name: Show file previews
+      run: |
+        echo "=== malicious_ips_v4.txt 前 10 行 ==="
+        head -20 edl/malicious_ips_v4.txt || echo "檔案不存在"
+        echo ""
+        echo "=== malicious_domains.txt 前 10 行 ==="
+        head -20 edl/malicious_domains.txt || echo "檔案不存在"
+        
+    - name: Configure Git
       run: |
         git config --local user.email "github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add edl/*.txt stats/*.json
-        git commit -m "Auto-update EDL lists - $(date +'%Y-%m-%d %H:%M:%S')"
-        git push
+        
+    - name: Check and commit changes
+      id: commit
+      run: |
+        # 將新檔案加入 Git
+        git add edl/ stats/
+        
+        # 檢查是否有變更
+        if git diff --staged --quiet; then
+          echo "沒有變更需要提交"
+          echo "has_changes=false" >> $GITHUB_OUTPUT
+        else
+          echo "發現變更，準備提交"
+          git status
+          git commit -m "Auto-update EDL lists - $(date +'%Y-%m-%d %H:%M:%S UTC')" || echo "提交失敗"
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+        fi
+        
+    - name: Push changes
+      if: steps.commit.outputs.has_changes == 'true'
+      run: |
+        git push origin main || git push origin master
+        echo "✅ 變更已推送到 repository"
         
     - name: Deploy to GitHub Pages
-      if: steps.check_changes.outputs.changed == 'true'
+      if: steps.commit.outputs.has_changes == 'true'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./edl
         publish_branch: gh-pages
+        
+    - name: Summary
+      if: always()
+      run: |
+        echo "## 📊 EDL 更新摘要" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        if [ -f "stats/latest.json" ]; then
+          echo "### 統計資訊" >> $GITHUB_STEP_SUMMARY
+          echo '```json' >> $GITHUB_STEP_SUMMARY
+          cat stats/latest.json >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 產生的檔案" >> $GITHUB_STEP_SUMMARY
+        echo '```' >> $GITHUB_STEP_SUMMARY
+        ls -lh edl/ 2>/dev/null || echo "無法列出檔案"
+        echo '```' >> $GITHUB_STEP_SUMMARY
