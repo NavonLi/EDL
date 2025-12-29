@@ -21,10 +21,15 @@ jobs:
         
     - name: Install dependencies
       run: |
-        pip install requests beautifulsoup4 validators dnspython
+        pip install requests validators
+        
+    - name: Create necessary directories
+      run: |
+        mkdir -p edl stats scripts
         
     - name: Fetch and merge threat intelligence
       run: python scripts/update_edl.py
+      continue-on-error: false
       
     - name: Check for changes
       id: check_changes
