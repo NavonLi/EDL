@@ -1,26 +1,26 @@
 {
-  "timestamp": "2026-04-04T02:49:55.321484",
+  "timestamp": "2026-04-05T03:27:35.587249",
   "sources": {
     "blocklist.de": {
-      "ipv4": 24569,
-      "ipv6": 188,
+      "ipv4": 25494,
+      "ipv6": 292,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 24757
+      "total": 25786
     },
     "OpenDBL_TOR_exit_nodes": {
-      "ipv4": 1302,
+      "ipv4": 1303,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 1302
+      "total": 1303
     },
     "OpenDBL_BruteforceBlocker": {
-      "ipv4": 551,
+      "ipv4": 521,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 551
+      "total": 521
     },
     "OpenDBL_Block_Dshield": {
       "ipv4": 0,
@@ -44,18 +44,18 @@
       "total": 0
     },
     "OpenDBL_IPSum_Level_3": {
-      "ipv4": 17388,
+      "ipv4": 17243,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 17388
+      "total": 17243
     },
     "greensnow": {
-      "ipv4": 4198,
+      "ipv4": 4137,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 4198
+      "total": 4137
     },
     "FireHOL": {
       "ipv4": 1,
@@ -85,18 +85,18 @@
       "cidr_v6": 0,
       "total": 1626
     },
-    "URLhaus": 25950,
-    "Phishing_Army": 157724
+    "URLhaus": 25916,
+    "Phishing_Army": 157937
   },
   "total_ips": 0,
   "total_cidrs": 0,
-  "total_domains": 183671,
+  "total_domains": 183850,
   "errors": [
-    "MalwareDomainList: HTTPSConnectionPool(host='www.malwaredomainlist.com', port=443): Max retries exceeded with url: /hostslist/hosts.txt (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.malwaredomainlist.com', port=443) at 0x7fd955fb7b10>, 'Connection to www.malwaredomainlist.com timed out. (connect timeout=30)'))"
+    "MalwareDomainList: HTTPSConnectionPool(host='www.malwaredomainlist.com', port=443): Max retries exceeded with url: /hostslist/hosts.txt (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.malwaredomainlist.com', port=443) at 0x7f03a384f110>, 'Connection to www.malwaredomainlist.com timed out. (connect timeout=30)'))"
   ],
-  "total_ipv4": 37669,
-  "total_ipv6": 188,
+  "total_ipv4": 38102,
+  "total_ipv6": 292,
   "total_cidr_v4": 4579,
   "total_cidr_v6": 0,
-  "combined_total": 226107
+  "combined_total": 226823
 }
