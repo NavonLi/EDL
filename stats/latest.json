@@ -1,12 +1,12 @@
 {
-  "timestamp": "2026-04-12T03:34:44.341585",
+  "timestamp": "2026-04-13T03:41:13.029614",
   "sources": {
     "blocklist.de": {
-      "ipv4": 10932,
-      "ipv6": 168,
+      "ipv4": 11435,
+      "ipv6": 188,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 11100
+      "total": 11623
     },
     "OpenDBL_TOR_exit_nodes": {
       "ipv4": 1300,
@@ -16,11 +16,11 @@
       "total": 1300
     },
     "OpenDBL_BruteforceBlocker": {
-      "ipv4": 410,
+      "ipv4": 396,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 410
+      "total": 396
     },
     "OpenDBL_Block_Dshield": {
       "ipv4": 0,
@@ -44,18 +44,18 @@
       "total": 0
     },
     "OpenDBL_IPSum_Level_3": {
-      "ipv4": 15743,
+      "ipv4": 14521,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 15743
+      "total": 14521
     },
     "greensnow": {
-      "ipv4": 4093,
+      "ipv4": 4259,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 4093
+      "total": 4259
     },
     "FireHOL": {
       "ipv4": 1,
@@ -85,18 +85,18 @@
       "cidr_v6": 0,
       "total": 1605
     },
-    "URLhaus": 26300,
-    "Phishing_Army": 157255
+    "URLhaus": 26539,
+    "Phishing_Army": 157404
   },
   "total_ips": 0,
   "total_cidrs": 0,
-  "total_domains": 183552,
+  "total_domains": 183940,
   "errors": [
-    "MalwareDomainList: HTTPSConnectionPool(host='www.malwaredomainlist.com', port=443): Max retries exceeded with url: /hostslist/hosts.txt (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.malwaredomainlist.com', port=443) at 0x7f3768d0f890>, 'Connection to www.malwaredomainlist.com timed out. (connect timeout=30)'))"
+    "MalwareDomainList: HTTPSConnectionPool(host='www.malwaredomainlist.com', port=443): Max retries exceeded with url: /hostslist/hosts.txt (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.malwaredomainlist.com', port=443) at 0x7f7544c45590>, 'Connection to www.malwaredomainlist.com timed out. (connect timeout=30)'))"
   ],
-  "total_ipv4": 28861,
-  "total_ipv6": 168,
+  "total_ipv4": 28353,
+  "total_ipv6": 188,
   "total_cidr_v4": 4589,
   "total_cidr_v6": 0,
-  "combined_total": 217170
+  "combined_total": 217070
 }
