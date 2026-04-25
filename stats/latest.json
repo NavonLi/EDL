@@ -1,19 +1,19 @@
 {
-  "timestamp": "2026-04-24T03:37:01.044325",
+  "timestamp": "2026-04-25T03:21:24.587013",
   "sources": {
     "blocklist.de": {
-      "ipv4": 33291,
-      "ipv6": 99,
+      "ipv4": 50792,
+      "ipv6": 91,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 33390
+      "total": 50883
     },
     "OpenDBL_TOR_exit_nodes": {
-      "ipv4": 1335,
+      "ipv4": 1333,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 1335
+      "total": 1333
     },
     "OpenDBL_BruteforceBlocker": {
       "ipv4": 335,
@@ -44,18 +44,18 @@
       "total": 0
     },
     "OpenDBL_IPSum_Level_3": {
-      "ipv4": 18878,
+      "ipv4": 17005,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 18878
+      "total": 17005
     },
     "greensnow": {
-      "ipv4": 4886,
+      "ipv4": 4697,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 4886
+      "total": 4697
     },
     "FireHOL": {
       "ipv4": 1,
@@ -81,22 +81,22 @@
     "emergingthreats": {
       "ipv4": 5,
       "ipv6": 0,
-      "cidr_v4": 1606,
+      "cidr_v4": 1609,
       "cidr_v6": 0,
-      "total": 1611
+      "total": 1614
     },
-    "URLhaus": 29453,
-    "Phishing_Army": 148759
+    "URLhaus": 29620,
+    "Phishing_Army": 148032
   },
   "total_ips": 0,
   "total_cidrs": 0,
-  "total_domains": 178208,
+  "total_domains": 177648,
   "errors": [
-    "MalwareDomainList: HTTPSConnectionPool(host='www.malwaredomainlist.com', port=443): Max retries exceeded with url: /hostslist/hosts.txt (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.malwaredomainlist.com', port=443) at 0x7f789dee1cd0>, 'Connection to www.malwaredomainlist.com timed out. (connect timeout=30)'))"
+    "MalwareDomainList: HTTPSConnectionPool(host='www.malwaredomainlist.com', port=443): Max retries exceeded with url: /hostslist/hosts.txt (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.malwaredomainlist.com', port=443) at 0x7fc0b565cd90>, 'Connection to www.malwaredomainlist.com timed out. (connect timeout=30)'))"
   ],
-  "total_ipv4": 48033,
-  "total_ipv6": 99,
-  "total_cidr_v4": 4596,
+  "total_ipv4": 63570,
+  "total_ipv6": 91,
+  "total_cidr_v4": 4595,
   "total_cidr_v6": 0,
-  "combined_total": 230936
+  "combined_total": 245904
 }
