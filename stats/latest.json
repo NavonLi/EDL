@@ -1,26 +1,26 @@
 {
-  "timestamp": "2026-09-10T04:18:55.782674",
+  "timestamp": "2026-09-11T04:18:28.785132",
   "sources": {
     "blocklist.de": {
-      "ipv4": 24810,
-      "ipv6": 494,
+      "ipv4": 23073,
+      "ipv6": 516,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 25304
+      "total": 23589
     },
     "OpenDBL_TOR_exit_nodes": {
-      "ipv4": 1337,
+      "ipv4": 1336,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 1337
+      "total": 1336
     },
     "OpenDBL_BruteforceBlocker": {
-      "ipv4": 593,
+      "ipv4": 610,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 593
+      "total": 610
     },
     "OpenDBL_Block_Dshield": {
       "ipv4": 0,
@@ -44,32 +44,32 @@
       "total": 0
     },
     "OpenDBL_IPSum_Level_3": {
-      "ipv4": 17667,
+      "ipv4": 16482,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 17667
+      "total": 16482
     },
     "greensnow": {
-      "ipv4": 5263,
+      "ipv4": 5343,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 5263
+      "total": 5343
     },
     "FireHOL": {
       "ipv4": 1,
       "ipv6": 0,
-      "cidr_v4": 4656,
+      "cidr_v4": 4669,
       "cidr_v6": 0,
-      "total": 4657
+      "total": 4670
     },
     "spamhaus": {
       "ipv4": 0,
       "ipv6": 0,
-      "cidr_v4": 1708,
+      "cidr_v4": 1710,
       "cidr_v6": 0,
-      "total": 1708
+      "total": 1710
     },
     "feodotracker": {
       "ipv4": 5,
@@ -81,22 +81,22 @@
     "emergingthreats": {
       "ipv4": 5,
       "ipv6": 0,
-      "cidr_v4": 1724,
+      "cidr_v4": 1726,
       "cidr_v6": 0,
-      "total": 1729
+      "total": 1731
     },
-    "URLhaus": 17669,
-    "Phishing_Army": 156241
+    "URLhaus": 17606,
+    "Phishing_Army": 155337
   },
   "total_ips": 0,
   "total_cidrs": 0,
-  "total_domains": 173900,
+  "total_domains": 172933,
   "errors": [
-    "MalwareDomainList: HTTPSConnectionPool(host='www.malwaredomainlist.com', port=443): Max retries exceeded with url: /hostslist/hosts.txt (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.malwaredomainlist.com', port=443) at 0x7f2034411b10>, 'Connection to www.malwaredomainlist.com timed out. (connect timeout=30)'))"
+    "MalwareDomainList: HTTPSConnectionPool(host='www.malwaredomainlist.com', port=443): Max retries exceeded with url: /hostslist/hosts.txt (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.malwaredomainlist.com', port=443) at 0x7fd4706163d0>, 'Connection to www.malwaredomainlist.com timed out. (connect timeout=30)'))"
   ],
-  "total_ipv4": 39460,
-  "total_ipv6": 494,
-  "total_cidr_v4": 4809,
+  "total_ipv4": 36607,
+  "total_ipv6": 516,
+  "total_cidr_v4": 4823,
   "total_cidr_v6": 0,
-  "combined_total": 218663
+  "combined_total": 214879
 }
