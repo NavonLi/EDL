@@ -1,5 +1,5 @@
 # Palo Alto Networks EDL - Malicious IPv6
-# Updated: 2026-10-03 05:01:51 UTC
+# Updated: 2026-10-04 05:34:04 UTC
 # Total IPs: 0
 # Total CIDRs: 0
 # Compatible with: PA-440, PA-Series
