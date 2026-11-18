@@ -1,26 +1,26 @@
 {
-  "timestamp": "2026-11-17T07:38:54.472053",
+  "timestamp": "2026-11-18T07:00:31.746997",
   "sources": {
     "blocklist.de": {
-      "ipv4": 23516,
-      "ipv6": 217,
+      "ipv4": 24918,
+      "ipv6": 222,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 23733
+      "total": 25140
     },
     "OpenDBL_TOR_exit_nodes": {
-      "ipv4": 1271,
+      "ipv4": 1280,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 1271
+      "total": 1280
     },
     "OpenDBL_BruteforceBlocker": {
-      "ipv4": 581,
+      "ipv4": 591,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 581
+      "total": 591
     },
     "OpenDBL_Block_Dshield": {
       "ipv4": 0,
@@ -44,32 +44,25 @@
       "total": 0
     },
     "OpenDBL_IPSum_Level_3": {
-      "ipv4": 17605,
+      "ipv4": 18331,
       "ipv6": 0,
       "cidr_v4": 0,
       "cidr_v6": 0,
-      "total": 17605
-    },
-    "greensnow": {
-      "ipv4": 1573,
-      "ipv6": 0,
-      "cidr_v4": 0,
-      "cidr_v6": 0,
-      "total": 1573
+      "total": 18331
     },
     "FireHOL": {
       "ipv4": 1,
       "ipv6": 0,
-      "cidr_v4": 4644,
+      "cidr_v4": 4629,
       "cidr_v6": 0,
-      "total": 4645
+      "total": 4630
     },
     "spamhaus": {
       "ipv4": 0,
       "ipv6": 0,
-      "cidr_v4": 1735,
+      "cidr_v4": 1738,
       "cidr_v6": 0,
-      "total": 1735
+      "total": 1738
     },
     "feodotracker": {
       "ipv4": 5,
@@ -81,22 +74,23 @@
     "emergingthreats": {
       "ipv4": 5,
       "ipv6": 0,
-      "cidr_v4": 1776,
+      "cidr_v4": 1755,
       "cidr_v6": 0,
-      "total": 1781
+      "total": 1760
     },
-    "Phishing_Army": 144564
+    "Phishing_Army": 145420
   },
   "total_ips": 0,
   "total_cidrs": 0,
-  "total_domains": 144564,
+  "total_domains": 145420,
   "errors": [
+    "greensnow: 503 Server Error: Service Unavailable for url: https://blocklist.greensnow.co/greensnow.txt",
     "URLhaus: 410 Client Error: Gone for url: https://urlhaus.abuse.ch/downloads/text/",
-    "MalwareDomainList: HTTPSConnectionPool(host='www.malwaredomainlist.com', port=443): Max retries exceeded with url: /hostslist/hosts.txt (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.malwaredomainlist.com', port=443) at 0x7e956146f890>, 'Connection to www.malwaredomainlist.com timed out. (connect timeout=30)'))"
+    "MalwareDomainList: HTTPSConnectionPool(host='www.malwaredomainlist.com', port=443): Max retries exceeded with url: /hostslist/hosts.txt (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.malwaredomainlist.com', port=443) at 0x76a750bd2d10>, 'Connection to www.malwaredomainlist.com timed out. (connect timeout=30)'))"
   ],
-  "total_ipv4": 36671,
-  "total_ipv6": 217,
-  "total_cidr_v4": 4832,
+  "total_ipv4": 37826,
+  "total_ipv6": 222,
+  "total_cidr_v4": 4814,
   "total_cidr_v6": 0,
-  "combined_total": 186284
+  "combined_total": 188282
 }
